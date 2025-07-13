@@ -1,77 +1,78 @@
 body {
-  background: linear-gradient(120deg, #e0eafc, #cfdef3 80%);
-  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #f9f9f9;
+  font-family: 'Inter', Arial, sans-serif;
+  color: #222;
   margin: 0;
-  min-height: 100vh;
-}
-.selected {
-  background: #2255ff;
-  color: #fff;
-  border-color: #2255ff;
 }
 
 .container {
-  background: #fffdfb;
   max-width: 400px;
-  margin: 60px auto 0 auto;
-  border-radius: 24px;
-  box-shadow: 0 8px 32px rgba(48,66,130,0.08);
-  padding: 32px 24px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  padding: 2em;
 }
 
-h1, h2 {
-  margin-top: 0;
-  font-weight: 700;
-  letter-spacing: -1px;
-  color: #122860;
+h1 {
+  font-size: 1.4em;
+  text-align: center;
+  margin-bottom: 1.5em;
+  font-weight: bold;
+}
+
+label {
+  margin-top: 1.2em;
+  display: block;
+  font-size: 1em;
+  font-weight: 600;
+}
+
+select, .bubble-group {
+  width: 100%;
+  margin: 0.4em 0 1em 0;
+  font-size: 1em;
+  padding: 0.5em;
+  border-radius: 10px;
+  border: 1px solid #ccc;
 }
 
 .bubble-group {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
-  margin-bottom: 16px;
+  gap: 0.5em;
+  margin-bottom: 1em;
 }
 
 .bubble {
-  display: flex;
-  align-items: center;
-  background: #f2f6ff;
-  border: 2px solid #e0eafe;
-  border-radius: 999px;
-  padding: 10px 24px;
+  background: #eee;
+  border-radius: 25px;
+  padding: 0.5em 1.1em;
+  font-size: 0.97em;
   cursor: pointer;
-  font-weight: 600;
-  color: #223;
-  transition: background .18s, border .18s;
+  user-select: none;
+  border: 1px solid #ccc;
+  transition: background .2s, border-color .2s;
 }
-
-.bubble input[type="checkbox"], .bubble input[type="radio"] {
-  margin-right: 8px;
-}
-
-.bubble input:checked + span,
-.bubble input:checked {
-  background: #2c65f6;
+.bubble.selected {
+  background: #143F90;
   color: #fff;
-  border-color: #2c65f6;
+  border-color: #143F90;
 }
 
 .primary-btn {
-  display: block;
   width: 100%;
-  margin-top: 18px;
-  padding: 16px;
-  background: #2c65f6;
-  color: #fff;
+  padding: 0.7em 0;
+  border-radius: 10px;
   border: none;
-  border-radius: 16px;
-  font-size: 1.1rem;
+  background: #143F90;
+  color: #fff;
   font-weight: bold;
+  font-size: 1.15em;
   cursor: pointer;
-  box-shadow: 0 2px 10px #2c65f660;
-  transition: background 0.16s;
+  margin-top: 1em;
+  transition: background .2s;
 }
 .primary-btn:hover {
-  background: #11338e;
+  background: #244ea8;
 }
