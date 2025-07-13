@@ -3,47 +3,47 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Decision Factors</title>
+  <title>Decision Factors Reporting</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <main class="container">
-    <h2>Decision Making Factors</h2>
+    <h1>Decision Factors Reporting</h1>
     <form id="decisionForm">
-      <label>Key purchase driver (jedan odabir):</label>
-      <div id="keyDriver" class="bubble-group">
-        <div class="bubble radio" data-value="Camera">Camera</div>
-        <div class="bubble radio" data-value="Processor">Processor</div>
-        <div class="bubble radio" data-value="Battery">Battery</div>
-        <div class="bubble radio" data-value="Price">Price</div>
-        <div class="bubble radio" data-value="AI">AI</div>
-      </div>
+      <label>Location:</label>
+      <select id="location">
+        <option value="Zagreb">Zagreb</option>
+        <option value="Split">Split</option>
+        <option value="Osijek">Osijek</option>
+      </select>
 
-      <label>Top Rated Features:</label>
-      <details>
-        <summary>True AI companion</summary>
-        <div id="trueAI" class="bubble-group">
-          <div class="bubble radio" data-value="Human-like AI Agent">Human-like AI Agent</div>
-          <div class="bubble radio" data-value="Integrated AI Platform">Integrated AI Platform</div>
-          <div class="bubble radio" data-value="Personalized AI">Personalized AI</div>
-        </div>
-      </details>
-      <details>
-        <summary>Performance</summary>
-        <div id="performance" class="bubble-group">
-          <div class="bubble radio" data-value="Gaming">Gaming</div>
-          <div class="bubble radio" data-value="Next gen processor">Next gen processor</div>
-          <div class="bubble radio" data-value="Realistic viewing">Realistic viewing</div>
-        </div>
-      </details>
-      <details>
-        <summary>Camera Experience</summary>
-        <div id="cameraExp" class="bubble-group">
-          <div class="bubble radio" data-value="Generative Photo Edit">Generative Photo Edit</div>
-          <div class="bubble radio" data-value="Audio Eraser">Audio Eraser</div>
-          <div class="bubble radio" data-value="Sketch to Image">Sketch to Image</div>
-        </div>
-      </details>
+      <label>Key Purchase Driver:</label>
+      <select id="driver">
+        <option value="Camera">Camera</option>
+        <option value="Processor">Processor</option>
+        <option value="Battery">Battery</option>
+        <option value="Price">Price</option>
+        <option value="AI">AI</option>
+      </select>
+
+      <label>Top Feature Category:</label>
+      <select id="featureCategory">
+        <option value="True AI companion">True AI companion</option>
+        <option value="Performance">Performance</option>
+        <option value="Camera Experience">Camera Experience</option>
+      </select>
+
+      <label>Sub-feature:</label>
+      <select id="subfeature">
+        <option value="Human-like AI Agent">Human-like AI Agent</option>
+        <option value="Integrated AI Platform">Integrated AI Platform</option>
+        <option value="Personalized AI">Personalized AI</option>
+        <option value="Gaming">Gaming</option>
+        <option value="Next gen processor">Next gen processor</option>
+        <option value="Realistic vieing">Realistic vieing</option>
+        <option value="Generative Photo Edit">Generative Photo Edit</option>
+        <option value="Audio Eraser">Audio Eraser</option>
+      </select>
 
       <button type="submit" class="primary-btn">Pošalji</button>
     </form>
@@ -52,43 +52,23 @@
     // --- Airtable API podaci ---
     const API_TOKEN = "patxfw0F5FppZNEog.ea19d0619748bb20058c2f8423708ca1e52ca514faf01708b1255884ce6e0565";
     const BASE_ID = "appQmtnEDB8KmTcNm";
-    const TABLE_NAME = "Consumer_insights-Grid view";
+    const TABLE_NAME = "Consumer_insights";
 
-    // Bubble radio single-choice za svaku grupu
-    function singleSelect(groupSelector) {
-      document.querySelectorAll(groupSelector + ' .radio').forEach(el => {
-        el.addEventListener('click', () => {
-          document.querySelectorAll(groupSelector + ' .radio').forEach(r => r.classList.remove('selected'));
-          el.classList.add('selected');
-        });
-      });
-    }
-    singleSelect('#keyDriver');
-    singleSelect('#trueAI');
-    singleSelect('#performance');
-    singleSelect('#cameraExp');
-
-    // Slanje forme u Airtable
     document.getElementById('decisionForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      function getSelectedValue(groupSelector) {
-        const sel = document.querySelector(groupSelector + ' .selected');
-        return sel ? sel.dataset.value : "";
-      }
-
-      const keyDriver = getSelectedValue('#keyDriver');
-      const trueAI = getSelectedValue('#trueAI');
-      const performance = getSelectedValue('#performance');
-      const cameraExp = getSelectedValue('#cameraExp');
+      const location = document.getElementById('location').value;
+      const driver = document.getElementById('driver').value;
+      const featureCategory = document.getElementById('featureCategory').value;
+      const subfeature = document.getElementById('subfeature').value;
 
       const record = {
         fields: {
-          "Datum": new Date().toISOString().split('T')[0],
-          "Key Purchase Driver": keyDriver,
-          "AI Companion": trueAI,
-          "Performance": performance,
-          "Camera Experience": cameraExp
+          "Date": new Date().toISOString().split('T')[0],
+          "Location": location,
+          "Key Purchase Driver": driver,
+          "Top Feature Category": featureCategory,
+          "Sub-feature": subfeature
         }
       };
 
@@ -104,9 +84,9 @@
       if (response.ok) {
         alert("Uspješno poslano!");
         document.getElementById('decisionForm').reset();
-        document.querySelectorAll('.radio').forEach(el => el.classList.remove('selected'));
       } else {
-        alert("Greška prilikom slanja");
+        const error = await response.json();
+        alert("Greška prilikom slanja: " + JSON.stringify(error));
       }
     });
   </script>
