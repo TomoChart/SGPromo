@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Consumer Insights Reporting</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <main class="container">
+    <h1>Consumer Insights Reporting</h1>
+    <form id="reportForm">
+      <label>Lokacija:</label>
+      <select id="lokacija">
+        <option value="Zagreb">Zagreb</option>
+        <option value="Split">Split</option>
+        <option value="Osijek">Osijek</option>
+      </select>
+
+      <label>OS (opcionalno):</label>
+      <select id="os">
+        <option></option>
+        <option>Android</option>
+        <option>iOS</option>
+      </select>
+
+      <label>Presentations:</label>
+      <div id="presentations" class="bubble-group">
+        <div class="bubble option" data-value="Phones">Phones</div>
+        <div class="bubble option" data-value="Wearables">Wearables</div>
+        <div class="bubble option" data-value="Tablets">Tablets</div>
+        <div class="bubble option" data-value="Accessories">Accessories</div>
+      </div>
+
+      <label>Activations:</label>
+      <div id="activations" class="bubble-group">
+        <div class="bubble option" data-value="Mobile">Mobile</div>
+        <div class="bubble option" data-value="Tablet">Tablet</div>
+        <div class="bubble option" data-value="Watch">Watch</div>
+        <div class="bubble option" data-value="PC">PC</div>
+      </div>
+
+      <button type="submit" class="primary-btn">Pošalji</button>
+    </form>
+  </main>
+  <script>
+    // --- Airtable API podaci ---
+    const API_TOKEN = "patxfw0F5FppZNEog.ea19d0619748bb20058c2f8423708ca1e52ca514faf01708b1255884ce6e0565";
+    const BASE_ID = "appQmtnEDB8KmTcNm";
+    const TABLE_NAME = "Consumer_insights-Grid view";
+
+    // Odabir/klik balončića
+    document.querySelectorAll('.option').forEach(el => {
+      el.addEventListener('click', () => {
+        el.classList.toggle('selected');
+      });
+    });
+
+    // Slanje forme u Airtable
+    document.getElementById('reportForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const lokacija = document.getElementById('lokacija').value;
+      const os = document.getElementById('os').value || null;
+
+      const presentations = Array.from(document.querySelectorAll('#presentations .selected')).map(div => div.dataset.value);
+      const activations = Array.from(document.querySelectorAll('#activations .selected')).map(div => div.dataset.value);
+
+      const record = {
+        fields: {
+          "Lokacija": lokacija,
+          "Datum": new Date().toISOString().split('T')[0],
+          ...(os && { "OS": os }),
+          "Presentations": presentations,
+          "Activations": activations
+        }
+      };
+
+      const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${API_TOKEN}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(record)
+      });
+
+      if (response.ok) {
+        alert("Uspješno poslano!");
+        document.getElementById('reportForm').reset();
+        document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+      } else {
+        alert("Greška prilikom slanja");
+      }
+    });
+  </script>
+</body>
+</html>
