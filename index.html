@@ -10,88 +10,89 @@
   <main class="container">
     <h1>Consumer Insights Reporting</h1>
     <form id="reportForm">
-      <label>Lokacija:</label>
-      <select id="lokacija">
+      <label>Location:</label>
+      <select id="location">
         <option value="Zagreb">Zagreb</option>
         <option value="Split">Split</option>
         <option value="Osijek">Osijek</option>
       </select>
 
-      <label>OS (opcionalno):</label>
-      <select id="os">
-        <option></option>
-        <option>Android</option>
-        <option>iOS</option>
+      <label>OS Type (optional):</label>
+      <select id="osType">
+        <option value=""></option>
+        <option value="Android Samsung">Android Samsung</option>
+        <option value="Android other">Android other</option>
+        <option value="iOS">iOS</option>
       </select>
 
       <label>Presentations:</label>
       <div id="presentations" class="bubble-group">
-        <div class="bubble option" data-value="Phones">Phones</div>
-        <div class="bubble option" data-value="Wearables">Wearables</div>
-        <div class="bubble option" data-value="Tablets">Tablets</div>
-        <div class="bubble option" data-value="Accessories">Accessories</div>
+        <div class="bubble option" data-value="Galaxy phones">Galaxy phones</div>
+        <div class="bubble option" data-value="Galaxy wearables">Galaxy wearables</div>
+        <div class="bubble option" data-value="Galaxy tablet">Galaxy tablet</div>
+        <div class="bubble option" data-value="AC">AC</div>
       </div>
 
       <label>Activations:</label>
       <div id="activations" class="bubble-group">
-        <div class="bubble option" data-value="Mobile">Mobile</div>
-        <div class="bubble option" data-value="Tablet">Tablet</div>
-        <div class="bubble option" data-value="Watch">Watch</div>
-        <div class="bubble option" data-value="PC">PC</div>
+        <div class="bubble option" data-value="Sound illusion">Sound illusion</div>
+        <div class="bubble option" data-value="Optical Illusion Art">Optical Illusion Art</div>
+        <div class="bubble option" data-value="Interpreting Facial Expressions">Interpreting Facial Expressions</div>
+        <div class="bubble option" data-value="Hidden in plain sight">Hidden in plain sight</div>
       </div>
 
       <button type="submit" class="primary-btn">Pošalji</button>
     </form>
   </main>
   <script>
-  const API_TOKEN = "patxfw0F5FppZNEog.ea19d0619748bb20058c2f8423708ca1e52ca514faf01708b1255884ce6e0565";
-  const BASE_ID = "appQmtnEDB8KmTcNm";
-  const TABLE_NAME = "Consumer_insights";
+    // --- Airtable API podaci ---
+    const API_TOKEN = "OVDJE_STAVI_TVOJ_TOKEN";
+    const BASE_ID = "appQmtnEDB8KmTcNm";
+    const TABLE_NAME = "Consumer_insights";
 
-  document.querySelectorAll('.option').forEach(el => {
-    el.addEventListener('click', () => {
-      el.classList.toggle('selected');
+    document.querySelectorAll('.option').forEach(el => {
+      el.addEventListener('click', () => {
+        el.classList.toggle('selected');
+      });
     });
-  });
 
-  document.getElementById('reportForm').addEventListener('submit', async (e) => {
-    e.preventDefault();
+    document.getElementById('reportForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    const location = document.getElementById('lokacija').value;
-    const osType = document.getElementById('os').value || null;
+      const location = document.getElementById('location').value;
+      const osType = document.getElementById('osType').value || null;
 
-    const presentations = Array.from(document.querySelectorAll('#presentations .selected')).map(div => div.dataset.value);
-    const activations = Array.from(document.querySelectorAll('#activations .selected')).map(div => div.dataset.value);
+      const presentations = Array.from(document.querySelectorAll('#presentations .selected')).map(div => div.dataset.value);
+      const activations = Array.from(document.querySelectorAll('#activations .selected')).map(div => div.dataset.value);
 
-    const record = {
-      fields: {
-        "Date": new Date().toISOString().split('T')[0],
-        "Location": location,
-        ...(osType && { "OS Type": osType }),
-        "Presentations": presentations,
-        "Activations": activations
+      const record = {
+        fields: {
+          "Date": new Date().toISOString().split('T')[0],
+          "Location": location,
+          ...(osType && { "OS Type": osType }),
+          "Presentations": presentations,
+          "Activations": activations
+        }
+      };
+
+      const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${API_TOKEN}`,
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(record)
+      });
+
+      if (response.ok) {
+        alert("Uspješno poslano!");
+        document.getElementById('reportForm').reset();
+        document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+      } else {
+        const error = await response.json();
+        alert("Greška prilikom slanja: " + JSON.stringify(error));
       }
-    };
-
-    const response = await fetch(`https://api.airtable.com/v0/${BASE_ID}/${encodeURIComponent(TABLE_NAME)}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${API_TOKEN}`,
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(record)
     });
-
-    const responseData = await response.json();
-    if (response.ok) {
-      alert("Uspješno poslano!");
-      document.getElementById('reportForm').reset();
-      document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
-    } else {
-      alert("Greška prilikom slanja: " + JSON.stringify(responseData));
-    }
-  });
-</script>
-
+  </script>
 </body>
 </html>
