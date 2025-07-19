@@ -54,6 +54,16 @@
     const BASE_ID = "appQmtnEDB8KmTcNm";
     const TABLE_NAME = "Consumer_insights";
 
+    document.querySelectorAll('.option').forEach(el => {
+      el.addEventListener('click', () => {
+        el.classList.toggle('selected');
+        el.classList.add('bubble-pop');
+      });
+      el.addEventListener('animationend', () => {
+        el.classList.remove('bubble-pop');
+      });
+    });
+
     document.getElementById('decisionForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 

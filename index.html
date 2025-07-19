@@ -53,6 +53,10 @@
     document.querySelectorAll('.option').forEach(el => {
       el.addEventListener('click', () => {
         el.classList.toggle('selected');
+        el.classList.add('bubble-pop');
+      });
+      el.addEventListener('animationend', () => {
+        el.classList.remove('bubble-pop');
       });
     });
 
