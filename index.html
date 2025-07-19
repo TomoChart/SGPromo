@@ -4,6 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Consumer Insights Reporting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="dark">
@@ -11,21 +14,21 @@
     <h1>Consumer Insights Reporting</h1>
     <form id="reportForm">
       <label>Location:</label>
-      <select id="location">
+      <select id="location" class="select-modern">
         <option value="Zagreb">Zagreb</option>
         <option value="Split">Split</option>
         <option value="Osijek">Osijek</option>
       </select>
 
       <label>OS Type (optional):</label>
-      <select id="osType">
+      <select id="osType" class="select-modern">
         <option value=""></option>
         <option value="Android Samsung">Android Samsung</option>
         <option value="Android other">Android other</option>
         <option value="iOS">iOS</option>
       </select>
 
-      <label>Presentations:</label>
+      <div class="category-badge">Presentations</div>
       <div id="presentations" class="bubble-group">
         <div class="bubble option" data-value="Galaxy phones">Galaxy phones</div>
         <div class="bubble option" data-value="Galaxy wearables">Galaxy wearables</div>
@@ -33,7 +36,7 @@
         <div class="bubble option" data-value="AC">AC</div>
       </div>
 
-      <label>Activations:</label>
+      <div class="category-badge">Activations</div>
       <div id="activations" class="bubble-group">
         <div class="bubble option" data-value="Sound illusion">Sound illusion</div>
         <div class="bubble option" data-value="Optical Illusion Art">Optical Illusion Art</div>
