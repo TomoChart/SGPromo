@@ -1,6 +1,6 @@
 body {
   background: #f9f9f9;
-  font-family: 'Inter', Arial, sans-serif;
+  font-family: 'Poppins', 'Inter', Arial, sans-serif;
   color: #222;
   margin: 0;
 }
@@ -81,3 +81,47 @@ body.dark {
   background: #000;
 }
 
+
+/* Modern select dropdown */
+.select-modern {
+  background: #fdf2f8;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 0.8em 1em;
+  font-size: 1rem;
+  color: #333;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.select-modern:hover,
+.select-modern:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Category badges */
+.category-badge {
+  display: inline-block;
+  margin: 0.25em auto;
+  padding: 0.6em 1.2em;
+  background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+  border-radius: 20px;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.1s ease;
+  cursor: pointer;
+  text-align: center;
+}
+
+.category-badge:active {
+  transform: scale(0.95);
+  background: linear-gradient(135deg, #fad0c4, #ff9a9e);
+}
+
+.bubble-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5em;
+  margin-bottom: 1em;
+  justify-content: center;
+}
