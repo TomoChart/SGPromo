@@ -65,6 +65,11 @@
       const presentations = Array.from(document.querySelectorAll('#presentations .selected')).map(div => div.dataset.value);
       const activations = Array.from(document.querySelectorAll('#activations .selected')).map(div => div.dataset.value);
 
+      if (presentations.length === 0 && activations.length === 0) {
+        alert('Odaberite barem jednu kategoriju.');
+        return;
+      }
+
       const record = {
         fields: {
           "Date": new Date().toISOString().split('T')[0],
@@ -85,9 +90,9 @@
       });
 
       if (response.ok) {
-        alert("Uspješno poslano!");
         document.getElementById('reportForm').reset();
         document.querySelectorAll('.option').forEach(el => el.classList.remove('selected'));
+        window.location.href = 'decision.html';
       } else {
         const error = await response.json();
         alert("Greška prilikom slanja: " + JSON.stringify(error));

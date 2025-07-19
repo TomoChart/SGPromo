@@ -69,9 +69,9 @@ select, .bubble-group {
 .primary-btn {
   width: 100%;
   padding: 0.7em 0;
-  border-radius: 10px;
+  border-radius: 20px;
   border: none;
-  background: #143F90;
+  background: #2fb7e5;
   color: #fff;
   font-weight: bold;
   font-size: 1.15em;
@@ -80,7 +80,7 @@ select, .bubble-group {
   transition: background .2s;
 }
 .primary-btn:hover {
-  background: #244ea8;
+  background: #24a6cf;
 }
 
 body.dark {
