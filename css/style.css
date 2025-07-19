@@ -76,3 +76,8 @@ select, .bubble-group {
 .primary-btn:hover {
   background: #244ea8;
 }
+
+body.dark {
+  background: #000;
+}
+
