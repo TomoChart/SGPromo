@@ -1,14 +1,18 @@
+/* Use Samsung Sharp Sans if available */
+
 body {
   background: #f9f9f9;
-  font-family: 'Inter', Arial, sans-serif;
-  color: #222;
+  font-family: 'Samsung Sharp Sans', Arial, sans-serif;
+  color: #fff;
+  font-weight: bold;
   margin: 0;
 }
 
 .container {
   max-width: 400px;
   margin: 40px auto;
-  background: #fff;
+  background: #1428a0;
+  color: #fff;
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(0,0,0,0.09);
   padding: 2em;
@@ -42,6 +46,7 @@ select, .bubble-group {
   flex-wrap: wrap;
   gap: 0.5em;
   margin-bottom: 1em;
+  justify-content: center;
 }
 
 .bubble {
@@ -54,7 +59,8 @@ select, .bubble-group {
   border: 1px solid #ccc;
   transition: background .2s, border-color .2s;
 }
-.bubble.selected {
+.bubble.selected,
+.category-badge.selected {
   background: #143F90;
   color: #fff;
   border-color: #143F90;
@@ -79,5 +85,42 @@ select, .bubble-group {
 
 body.dark {
   background: #000;
+}
+
+/* Podloga za dropdowne */
+.select-modern {
+  background: #2fb7e5;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  padding: 0.8em 1em;
+  font-size: 1rem;
+  color: #fff;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Hover i focus efekti */
+.select-modern:hover,
+.select-modern:focus {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Kategorije "Presentations" i "Activations" kao mjehurići */
+.category-badge {
+  display: inline-block;
+  margin: 0.25em;
+  padding: 0.6em 1.2em;
+  background: #2fb7e5;
+  border-radius: 20px;
+  color: #fff;
+  font-weight: 600;
+  transition: background 0.3s ease, transform 0.1s ease;
+  cursor: pointer;
+}
+
+/* Interakcija na klik */
+.category-badge:active {
+  transform: scale(0.95);
+  background: #2fb7e5;
 }
 
